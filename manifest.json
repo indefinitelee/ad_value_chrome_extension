@@ -1,0 +1,16 @@
+{
+	"manifest-version": 1,
+
+	"name": "Ad Value",
+	"description": "Calculate cost of blocked ads",
+	"version": "0.1",
+
+	"browser_action": {
+		"default_icon": "dollar.png",
+		"default_popup": "popup.html"
+	},
+
+	"permissions": [
+		"activeTab", "https://ajax.googleapis.com/"
+	]
+}
