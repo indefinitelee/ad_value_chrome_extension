@@ -1,9 +1,13 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 2, // must be version 2
 
   "name": "Getting started example",
   "description": "This extension shows a Google Image search result for the current page",
   "version": "1.0",
+  "default_locale": "en",
+  // "devtools_page": "devtools.html",
+  // https://developer.chrome.com/extensions/devtools
+  // actually no
 
   "browser_action": {
     "default_icon": "icon.png",
@@ -11,6 +15,10 @@
     "default_title": "See how much this page costs"
   },
   "permissions": [
+    "pageCapture", // save MHTML version of page?
+// https://developer.chrome.com/extensions/pageCapture
+// https://developer.chrome.com/extensions/pageCapture#method-saveAsMHTML
+    "webRequest", // view network requests but if blocker stops them, will they register?
     "activeTab",
     "https://ajax.googleapis.com/"
   ]
