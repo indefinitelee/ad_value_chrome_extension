@@ -1,4 +1,5 @@
 // save the url of the page.
+console.log("content.js");
 
 let urls = [] // eh maybe an object with url: iframes?
 
