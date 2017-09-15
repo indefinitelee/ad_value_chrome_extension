@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // call indside the event listener?
 function getAds () {
+
+  // LEE: try window.frames.length
+  // but somestimes ads will be iframes inside iframes, so the best is to do something like this:
+  // window.frames.reduce((accumulator, frame) => return accumulator += frame.frames.length);
+  // have you used array.prototype.reduce? if not check it out on MDN, just lets you add up values in a list
+
   let iFrames = document.querySelectorAll("iframe");
   // or get elementsByTagName ? probably not because it is a live and changing list
   let numberOfIframes = iFrames.length;
