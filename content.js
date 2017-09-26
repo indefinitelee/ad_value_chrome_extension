@@ -1,31 +1,37 @@
-// save the url of the page.
-console.log("content.js");
+import adValue from './calculate.js';
 
-let urls = [] // eh maybe an object with url: iframes?
+// we want this to run on the active tab
+(function() {
+  window.WAT = "wat"; // i guess this needs to exist for reasons?
+  return window.frames.length;
+})();
 
-// also make sure DOM is loaded. Apparently this is a thing.
+// also make sure DOM is loaded.
 document.addEventListener('DOMContentLoaded', function() {
   getCurrentTabUrl(function(url) {
     urls.push(url);
+    getAds();
   });
 }
 
 
 // call indside the event listener?
 function getAds () {
-
   // LEE: try window.frames.length
   // but somestimes ads will be iframes inside iframes, so the best is to do something like this:
   // window.frames.reduce((accumulator, frame) => return accumulator += frame.frames.length);
   // have you used array.prototype.reduce? if not check it out on MDN, just lets you add up values in a list
 
-  let iFrames = document.querySelectorAll("iframe");
+  let iFrames = window.frames.reduce((accumulator, frame) => return accumulator += frame.frames.length);
   // or get elementsByTagName ? probably not because it is a live and changing list
   let numberOfIframes = iFrames.length;
-  console.log(iFrames);
+  console.log(iFrames, "list of iframes i hope");
+
+  return numberOfIframes;
 }
 
 // again from tutorial but seems right
+// cause we want to list where ads came from
 function getCurrentTabUrl(callback) {
   var queryInfo = {
     active: true,
@@ -51,7 +57,15 @@ function getCurrentTabUrl(callback) {
     console.assert(typeof url == 'string', 'tab.url should be a string');
 
     callback(url);
+
+    return url; //?
+
+// want to append to popup.html DOM this page ${url} had ${numberOfIframes} ads.
   });
+}
+}
+
+
 
 // don't save data if user in incognito mode --> from tutorial
 
@@ -64,3 +78,12 @@ function saveTabData(tab, data) {
     localStorage[tab.url] = data;  // OK to store data
   }
 }
+
+
+var scriptFromFile = { file: 'content.js' };
+
+document.addEventListener('DOMContentLoaded', function() {
+  getCurrentTabUrl(function(url) {
+    // Put the image URL in Google search.
+
+});
