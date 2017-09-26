@@ -36,6 +36,7 @@
     "<all_urls>",
     "storage",
     "*://*.google.com/",
-    "*://*.doubleclick.net/"
+    "*://*.doubleclick.net/",
+    "webNavigation"
   ]
 }
