@@ -11,10 +11,11 @@ var count = 0;
 var storage;
 
 var getExecutionResult = function(resultArray) {
-  console.log(resultArray);
+  console.log(resultArray, 'result array');
+  console.log(chrome.storage, 'chrome storage');
   if (resultArray[0] && typeof resultArray[0] === 'number') {
     blocked.innerHTML = resultArray[0];
-    // storage.set({ count: resultArray[0] + count });
+    chrome.storage.local.set({ count: resultArray[0] + count });
   } else {
     console.log('error');
   }
