@@ -21,7 +21,8 @@
   ],
 
   //wat?
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_security_policy":
+    "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
   "browser_action": {
     "default_icon": "icon.png",

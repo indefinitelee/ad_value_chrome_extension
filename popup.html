@@ -10,13 +10,13 @@
     <style>
       body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 14px;
+        font-size: 10px;
       }
       #container {
         /* avoid an excessively wide status text */
         white-space: pre;
-        text-overflow: ellipsis;
-        overflow: scroll;
+        text-overflow: auto;
+        /*overflow: scroll;*/
         max-width: 300px;
       }
     </style>
@@ -32,8 +32,8 @@
   <body>
     <div id="container">
       <h1>How much have you co$t?</h1>
-      <div id="frames-blocked"></div>
-      <div id="page-cost"></div>
+      <p>You are blocking <span id="frames-blocked"></span> ads on this page</p>
+      <p>This page would have otherwise earned <span id="cost"></span></p>
       <div id="pay">
         <button id="money">Send them some money</button>
       </div>

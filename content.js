@@ -1,5 +1,3 @@
-// import { adValue, revPerPage } from './calculate.js';
-
 // we want this to run on the active tab
 (function() {
   return window.frames.length;
