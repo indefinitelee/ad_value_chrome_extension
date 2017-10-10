@@ -15,8 +15,10 @@ var getExecutionResult = function(resultArray) {
   // console.log(chrome.storage, "chrome storage");
   if (resultArray[0] && typeof resultArray[0] === "number") {
     blocked.innerHTML = resultArray[0];
-    cost.innerHTML = "$0.045";
-    chrome.storage.local.set({ count: resultArray[0] + count });
+    cost.innerHTML = revPerPage;
+    chrome.storage.local.set({
+      count: resultArray[0] + count
+    });
   } else {
     console.log("error");
   }
@@ -29,6 +31,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   blocked = document.getElementById("frames-blocked");
   cost = document.getElementById("cost");
+  url = chrome.tabs.executeScript(scriptFromFile, getExecutionResult);
+});
 
-  chrome.tabs.executeScript(scriptFromFile, getExecutionResult);
+// there's no need for this to be a separate file
+const revPerPage = 0.045; // guesstimation of google revenue per page
+
+const perAdValue = function(revPerPage, frames) {
+  return revPerPage / frames;
+};
+
+// get tab url
+chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
+  console.log(tabs[0].url);
 });

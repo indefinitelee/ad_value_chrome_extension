@@ -31,11 +31,10 @@
   },
 
   "permissions": [
-    // "pageCapture", // saves MHTML version of page?
-    "webRequest", // can;t be used with event listener pages
     "activeTab",
     "<all_urls>",
     "storage",
+    "tabs", // apparently different than "activeTab"
     "*://*.google.com/",
     "*://*.doubleclick.net/",
     "webNavigation"
