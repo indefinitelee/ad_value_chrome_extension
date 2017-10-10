@@ -7,15 +7,14 @@
   "description": "Try to calculate value of blocked ads on page",
   "version": "1.0",
 
-  // "background": {
-  //   "persistent": false,
-  //   "scripts": ["background.js"] // oh wait there is a background script?
-  // },
+  "background": {
+    "scripts": ["background.js"] // this will run on click of the icon I think
+  },
 
   // only content scripts have access to DOM
   "content_scripts": [
     {
-      "matches": ["http://*/*"], // on any site
+      "matches": ["<all_urls>"], // on any site
       "js": ["content.js"] // do this stuff
     }
   ],
