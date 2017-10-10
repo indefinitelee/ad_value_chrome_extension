@@ -4,10 +4,12 @@
 
 // control the popup.html file
 
-var scriptFromFile = { file: "content.js" };
+var framesScript = { file: "content.js" };
+var clickIcon = { file: "content2.js" };
 var blocked;
 var cost;
-var count = 0;
+var adCount = 0;
+var visitCount = 1;
 var storage;
 var url;
 var history;
@@ -15,23 +17,15 @@ var totalCost;
 
 // DOM of popup.html
 document.addEventListener("DOMContentLoaded", () => {
-  chrome.tabs.executeScript(scriptFromFile, getExecutionResult);
-  // why do we need to set storage here?
-  storage = chrome.storage.local;
-  // can't get storage on load because there's nothing there.
-  // chrome.storage.local.get("count", receiveStorageValue);
+  chrome.tabs.executeScript(framesScript, getExecutionResult);
+  chrome.storage.local.set({ count: adCount });
+  console.log(chrome.storage.local, "result array?");
   blocked = document.getElementById("frames-blocked");
   cost = document.getElementById("cost");
+  totalCost = document.getElementById("totalCost");
 });
 
-var formatURL = function(url) {
-  url = url.replace("https://", "");
-  url = url.replace("http://", "");
-
-  return url;
-};
-
-// when someone clicks the addOn icon, we should get their total ads blockd and cost
+// when someone clicks the addOn icon, we should get their total ads blocked and cost
 // var receiveStorageValue = function(value) {
 //   console.log("value from storage:", value);
 //   if (!value || Object.keys(value).length === 0) {
@@ -43,16 +37,21 @@ var formatURL = function(url) {
 // };
 
 var getExecutionResult = function(resultArray) {
-  // console.log(resultArray, "result array");
+  console.log(resultArray, "result array");
   if (resultArray[0] && typeof resultArray[0] === "number") {
     blocked.innerHTML = resultArray[0];
     cost.innerHTML = revPerPage;
-    // can this just be storage.set since we assign storage on above?
+    // how to get visitCount to increment
+    totalCost.innerHTML = revPerPage * visitCount;
+
+    // make this an array of objects? it will make an object for each site, and create duplicates prolly until we stop that.
     chrome.storage.local.set({
-      count: resultArray[0] + count,
-      url: url
+      // not sure if this url variable will be holding anything I suck at scoping
+      url: url,
+      adCount: resultArray[0] + count,
+      visitCount: (visitCount += 1)
     });
-    console.log(chrome.storage.local, "saved to chrome storage I hope");
+    console.log(chrome.storage.local.count, "saved to chrome storage I hope");
   } else {
     console.log("error");
   }
@@ -60,8 +59,18 @@ var getExecutionResult = function(resultArray) {
 
 // get tab url
 url = chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
+  let site = tabs[0].url;
+  formatURL(site);
   console.log("the url is", tabs[0].url);
 });
+
+// just the hostname please
+var formatURL = function(url) {
+  url = url.replace("https://", "");
+  url = url.replace("http://", "");
+
+  return url;
+};
 
 // there's no need for this to be a separate file
 const revPerPage = 0.045; // guesstimation of google revenue per page
