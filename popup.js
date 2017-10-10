@@ -18,8 +18,8 @@ var totalCost;
 // DOM of popup.html
 document.addEventListener("DOMContentLoaded", () => {
   chrome.tabs.executeScript(framesScript, getExecutionResult);
-  chrome.storage.local.set({ count: adCount });
-  console.log(chrome.storage.local, "result array?");
+  // man this url variable is getting abused
+  getSiteFromStorage(url)
   blocked = document.getElementById("frames-blocked");
   cost = document.getElementById("cost");
   totalCost = document.getElementById("totalCost");
@@ -48,8 +48,7 @@ var getExecutionResult = function(resultArray) {
     chrome.storage.local.set({
       // not sure if this url variable will be holding anything I suck at scoping
       url: url,
-      adCount: resultArray[0] + count,
-      visitCount: (visitCount += 1)
+      visitCount: visitCount
     });
     console.log(chrome.storage.local.count, "saved to chrome storage I hope");
   } else {
@@ -57,6 +56,16 @@ var getExecutionResult = function(resultArray) {
   }
 };
 
+var getSiteFromStorage(url) {
+  chrome.storage.local.get(
+    //something something?
+  )
+  // some code forEach object in storage?
+  // if (url === chrome.storage.local.get .url??) {
+  //  chrome.storage.local.set({})
+  //   increment visitCount by 1
+  }
+}
 // get tab url
 url = chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
   let site = tabs[0].url;
