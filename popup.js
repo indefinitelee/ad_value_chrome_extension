@@ -14,15 +14,15 @@ var history;
 var totalCost;
 
 // DOM of popup.html
-// document.addEventListener("DOMContentLoaded", () => {
-//   chrome.tabs.executeScript(scriptFromFile, getExecutionResult);
-//   // why do we need to set storage here?
-//   storage = chrome.storage.local;
-//   // can't get storage on load because there's nothing there.
-//   // chrome.storage.local.get("count", receiveStorageValue);
-//   blocked = document.getElementById("frames-blocked");
-//   cost = document.getElementById("cost");
-// });
+document.addEventListener("DOMContentLoaded", () => {
+  chrome.tabs.executeScript(scriptFromFile, getExecutionResult);
+  // why do we need to set storage here?
+  storage = chrome.storage.local;
+  // can't get storage on load because there's nothing there.
+  // chrome.storage.local.get("count", receiveStorageValue);
+  blocked = document.getElementById("frames-blocked");
+  cost = document.getElementById("cost");
+});
 
 var formatURL = function(url) {
   url = url.replace("https://", "");
@@ -59,9 +59,9 @@ var getExecutionResult = function(resultArray) {
 };
 
 // get tab url
-// url = chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
-//   console.log("the url is", tabs[0].url);
-// });
+url = chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
+  console.log("the url is", tabs[0].url);
+});
 
 // there's no need for this to be a separate file
 const revPerPage = 0.045; // guesstimation of google revenue per page
