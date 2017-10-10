@@ -9,29 +9,34 @@ var blocked;
 var cost;
 var count = 0;
 var storage;
+var url;
 
 var getExecutionResult = function(resultArray) {
   // console.log(resultArray, "result array");
-  // console.log(chrome.storage, "chrome storage");
   if (resultArray[0] && typeof resultArray[0] === "number") {
     blocked.innerHTML = resultArray[0];
     cost.innerHTML = revPerPage;
-    chrome.storage.local.set({
-      count: resultArray[0] + count
-    });
+    chrome.storage.local.set(
+      {
+        count: resultArray[0] + count,
+        url: url
+      },
+      () => {}
+    );
+    console.log(chrome.storage.local, "saved to chrome storage");
   } else {
     console.log("error");
   }
 };
 // DOM of popup.html or current tab?
 document.addEventListener("DOMContentLoaded", () => {
+  chrome.tabs.executeScript(scriptFromFile, getExecutionResult);
+  // why do we need to set storage here?
   storage = chrome.storage.local;
   // console.log(chrome.storage);
   // console.log("loaded popupDOM");
-
   blocked = document.getElementById("frames-blocked");
   cost = document.getElementById("cost");
-  url = chrome.tabs.executeScript(scriptFromFile, getExecutionResult);
 });
 
 // there's no need for this to be a separate file
@@ -42,6 +47,6 @@ const perAdValue = function(revPerPage, frames) {
 };
 
 // get tab url
-chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
-  console.log(tabs[0].url);
+url = chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
+  console.log("the url is", tabs[0].url);
 });
