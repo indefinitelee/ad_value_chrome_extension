@@ -19,7 +19,7 @@ var totalCost;
 document.addEventListener("DOMContentLoaded", () => {
   chrome.tabs.executeScript(framesScript, getExecutionResult);
   // man this url variable is getting abused
-  getSiteFromStorage(url)
+  // getSiteFromStorage(url);
   blocked = document.getElementById("frames-blocked");
   cost = document.getElementById("cost");
   totalCost = document.getElementById("totalCost");
@@ -45,27 +45,34 @@ var getExecutionResult = function(resultArray) {
     totalCost.innerHTML = revPerPage * visitCount;
 
     // make this an array of objects? it will make an object for each site, and create duplicates prolly until we stop that.
-    chrome.storage.local.set({
-      // not sure if this url variable will be holding anything I suck at scoping
-      url: url,
-      visitCount: visitCount
-    });
-    console.log(chrome.storage.local.count, "saved to chrome storage I hope");
+    chrome.storage.local.set(
+      {
+        // not sure if this url variable will be holding anything I suck at scoping
+        url: url,
+        visitCount: visitCount
+      },
+      function(result) {
+        chrome.storage.local.get(url, function(result) {
+          console.log(result, "got chrome storage");
+        });
+      }
+    );
   } else {
     console.log("error");
   }
 };
 
-var getSiteFromStorage(url) {
-  chrome.storage.local.get(
-    //something something?
-  )
-  // some code forEach object in storage?
-  // if (url === chrome.storage.local.get .url??) {
-  //  chrome.storage.local.set({})
-  //   increment visitCount by 1
-  }
-}
+// var getSiteFromStorage(url) {
+//   chrome.storage.local.get(
+//     something something?
+//   )
+//   some code forEach object in storage?
+//   if (url === chrome.storage.local.get .url??) {
+//    chrome.storage.local.set({})
+//     increment visitCount by 1
+//   }
+// }
+
 // get tab url
 url = chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
   let site = tabs[0].url;
