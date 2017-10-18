@@ -25,17 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
   totalCost = document.getElementById("totalCost");
 });
 
-// when someone clicks the addOn icon, we should get their total ads blocked and cost
-// var receiveStorageValue = function(value) {
-//   console.log("value from storage:", value);
-//   if (!value || Object.keys(value).length === 0) {
-//     count = 0;
-//   } else {
-//     count = value["count"];
-//   }
-//   counter.innerHTML = "count from storage: " + count;
-// };
-
 var getExecutionResult = function(resultArray) {
   console.log(resultArray, "result array");
   if (resultArray[0] && typeof resultArray[0] === "number") {
@@ -61,6 +50,17 @@ var getExecutionResult = function(resultArray) {
     console.log("error");
   }
 };
+
+// when someone clicks the addOn icon, we should get their total ads blocked and cost
+// var receiveStorageValue = function(value) {
+//   console.log("value from storage:", value);
+//   if (!value || Object.keys(value).length === 0) {
+//     count = 0;
+//   } else {
+//     count = value["count"];
+//   }
+//   counter.innerHTML = "count from storage: " + count;
+// };
 
 // var getSiteFromStorage(url) {
 //   chrome.storage.local.get(
